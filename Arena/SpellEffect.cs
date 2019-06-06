@@ -41,9 +41,9 @@ namespace Arena
         
 
         /// <summary>
-        /// Modify atribute for certain time.
+        /// Decrease or increase atribute for specified time then return it to original value
         /// </summary>
-        /// <param name="time">Number of rounds when effect is active. -1 For permanent</param>
+        /// <param name="time">Number of rounds when effect is active. -1 for permanent</param>
         /// <param name="bonusAtribute">Atribute to edit</param>
         public SpellEffect (int time, BonusAtribute bonusAtribute)
         {
@@ -52,6 +52,14 @@ namespace Arena
             RemainingTime = time;
         }
 
+        /// <summary>
+        /// Decrease or increase actual hp or energy pernamently for specified time.
+        /// </summary>
+        /// <param name="time">Number of rounds when effect is active. 0 for instant effect</param>
+        /// <param name="flatAtribute">Specify energy or hp</param>
+        /// <param name="flatNumber">How much actual energy or hp</param>
+        /// <param name="modNumber"></param>
+        /// <param name="modAtribute"></param>
         public SpellEffect(int time, FlatAtribute flatAtribute, int flatNumber,  float modNumber, Modificator modAtribute)
         {
             Time = time;

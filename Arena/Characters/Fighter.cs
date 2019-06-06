@@ -189,6 +189,7 @@ namespace Arena
             public HitByAttack AttackHit  { get; set; }
             public int Damage { get; set; }
             public Fighter Target { get; set; }
+            public Fighter Attacker { get; set; }
         }
 
         public class SpellCastArgs : EventArgs
@@ -215,13 +216,17 @@ namespace Arena
 
         protected virtual void Attacked(AttackArgs.HitByAttack attackHit, Fighter target, int damage)
         {
-            OnAttack?.Invoke(this, new AttackArgs() { AttackHit = attackHit, Target = target, Damage = damage });
+            OnAttack?.Invoke(this, new AttackArgs() { AttackHit = attackHit, Target = target, Attacker = this, Damage = damage });
         }
         protected virtual void Casted(SpellCastArgs.Success success)
         {
             OnSpellCast?.Invoke(this, new SpellCastArgs() { Cast = success });
         }
 
+        /// <summary>
+        /// Attack can hit miss or critical. If not miss decrease actual hp of target.
+        /// </summary>
+        /// <param name="fighter">Target of attack</param>
         public void Attack(Fighter fighter)
         {
             if (IsAlive && fighter.IsAlive) // Check if target alive
@@ -356,6 +361,7 @@ namespace Arena
                 Casted(SpellCastArgs.Success.Casted);
             }
         }
+
 
         protected void ApplyBonusAtributes()
         {
