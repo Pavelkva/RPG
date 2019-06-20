@@ -45,6 +45,7 @@
     <Compile Include="BonusAtribute.cs" />
     <Compile Include="Characters\Fighter.cs" />
     <Compile Include="Characters\EnemyNpc.cs" />
+    <Compile Include="FighterEffectManager.cs" />
     <Compile Include="FightingPit.cs" />
     <Compile Include="Items\Equipment.cs" />
     <Compile Include="Items\Inventory.cs" />

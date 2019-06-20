@@ -196,6 +196,7 @@ namespace Arena
         {
             public enum Success { OnCooldown, NotEnougthEnergy, Casted }
             public Success Cast { get; set; }
+            public string SpellName { get; set; }
         }
 
         protected Fighter(string name, int maxHp, int maxEnergy, int strength=10, int agility=10, int intellect=10, int armor=0)
@@ -218,9 +219,9 @@ namespace Arena
         {
             OnAttack?.Invoke(this, new AttackArgs() { AttackHit = attackHit, Target = target, Attacker = this, Damage = damage });
         }
-        protected virtual void Casted(SpellCastArgs.Success success)
+        protected virtual void Casted(SpellCastArgs.Success success,string spellName)
         {
-            OnSpellCast?.Invoke(this, new SpellCastArgs() { Cast = success });
+            OnSpellCast?.Invoke(this, new SpellCastArgs() { Cast = success, SpellName = spellName });
         }
 
         /// <summary>
@@ -357,17 +358,17 @@ namespace Arena
         {
             if (spell.IsOnCooldown)
             {
-                Casted(SpellCastArgs.Success.OnCooldown);
+                Casted(SpellCastArgs.Success.OnCooldown, spell.Name);
             }
             else if(spell.EnergyCost > ActualEnergy)
             {
-                Casted(SpellCastArgs.Success.NotEnougthEnergy);
+                Casted(SpellCastArgs.Success.NotEnougthEnergy, spell.Name);
             }
             else
             {
                 spell.Cast(this, target);
                 ActualEnergy -= spell.EnergyCost;
-                Casted(SpellCastArgs.Success.Casted);
+                Casted(SpellCastArgs.Success.Casted, Name = spell.Name);
             }
         }
 
@@ -407,7 +408,7 @@ namespace Arena
 
         public override string ToString()
         {
-            string fighter = String.Format("{0} HP: {1}/{2}", Name, ActualHp, MaxHp);
+            string fighter = String.Format("{0} HP: {1}/{2} ENERGY {3}/{4}", Name, ActualHp, MaxHp, ActualEnergy, MaxEnergy);
             return fighter;
         }
     }

@@ -39,6 +39,8 @@ namespace Arena
 
             player.OnAttack += ukaz;
             enemy.OnAttack += ukaz;
+            player.OnSpellCast += ukazSpell;
+            enemy.OnSpellCast += ukazSpell;
 
 
             while (true)
@@ -60,6 +62,10 @@ namespace Arena
         static void ukaz(object sender, Fighter.AttackArgs e)
         {
             Console.WriteLine(sender + " - " + e.AttackHit  + " for " + e.Damage + " on " + e.Target );
+        }
+        static void  ukazSpell(object sender, Fighter.SpellCastArgs e)
+        {
+            Console.WriteLine(sender + " - " + e.Cast + " " + e.SpellName);
         }
     }
 }
