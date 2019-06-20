@@ -285,7 +285,16 @@ namespace Arena
                 }
                 else
                 {
-                    spellEffects.Add(spellEffect);
+                    foreach (SpellEffect activeSpellEffect in spellEffects)
+                    {
+                        if (spellEffect == activeSpellEffect)
+                        {
+                            spellPropertyActive = true;
+                            activeSpellEffect.RemainingTime = activeSpellEffect.Time;
+                        }
+                    }
+                    if (!spellPropertyActive)
+                        spellEffects.Add(spellEffect);
                 }
             }
             else
