@@ -36,7 +36,7 @@ namespace Arena
         }
         public Modificator ModificatorAtribute { get; private set; }
         public enum Trigger { OnCast, OnAttack, TurnStart, TurnEnd }
-        public Trigger Trigger {get; private set;}
+        public Trigger SpellTrigger {get; private set;}
         public float ModificatorNumber { get; private set; }
         public int? FlatNumber { get; private set; }
         public int FinalNumber { get; set; } = 0;
@@ -48,13 +48,13 @@ namespace Arena
         /// </summary>
         /// <param name="time">Number of rounds when effect is active. -1 for permanent</param>
         /// <param name="bonusAtribute">Atribute to edit</param>
-        public SpellEffect (int time, BonusAtribute bonusAtribute, Modificator modAtribute, Trigger trigger = Trigger.OnCast)
+        public SpellEffect (int time, BonusAtribute bonusAtribute, Modificator modAtribute, Trigger spellTrigger = Trigger.OnCast)
         {
             Time = time;
             BonusAtribute = bonusAtribute;
             RemainingTime = time;
             ModificatorAtribute = modAtribute;
-            Trigger = trigger;
+            SpellTrigger = spellTrigger;
         }
 
         /// <summary>
