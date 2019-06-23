@@ -11,7 +11,7 @@ namespace Arena
         private Equipment[] equipmentSlots;
         
 
-        public Player(string name, int maxHp=0, int maxEnergy = 0, int strength = 10, int agility = 10, int intellect = 10, int armor = 0) : base(name, maxHp, maxEnergy, strength, agility, intellect, armor)
+        public Player(string name, IFighterEffectManager fighterEffectManager, int maxHp=0, int maxEnergy = 0, int strength = 10, int agility = 10, int intellect = 10, int armor = 0) : base(name, fighterEffectManager ,maxHp, maxEnergy, strength, agility, intellect, armor)
         {
             int numSlots = Enum.GetNames(typeof(Equipment.Parts)).Length;
             equipmentSlots = new Equipment[numSlots];

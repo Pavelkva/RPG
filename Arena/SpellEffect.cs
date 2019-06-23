@@ -35,9 +35,12 @@ namespace Arena
             intelect
         }
         public Modificator ModificatorAtribute { get; private set; }
+        public enum Trigger { OnCast, OnAttack, TurnStart, TurnEnd }
+        public Trigger Trigger {get; private set;}
         public float ModificatorNumber { get; private set; }
         public int? FlatNumber { get; private set; }
         public int FinalNumber { get; set; } = 0;
+
         
 
         /// <summary>
@@ -45,11 +48,13 @@ namespace Arena
         /// </summary>
         /// <param name="time">Number of rounds when effect is active. -1 for permanent</param>
         /// <param name="bonusAtribute">Atribute to edit</param>
-        public SpellEffect (int time, BonusAtribute bonusAtribute)
+        public SpellEffect (int time, BonusAtribute bonusAtribute, Modificator modAtribute, Trigger trigger = Trigger.OnCast)
         {
             Time = time;
             BonusAtribute = bonusAtribute;
             RemainingTime = time;
+            ModificatorAtribute = modAtribute;
+            Trigger = trigger;
         }
 
         /// <summary>
@@ -60,7 +65,7 @@ namespace Arena
         /// <param name="flatNumber">How much actual energy or hp</param>
         /// <param name="modNumber"></param>
         /// <param name="modAtribute"></param>
-        public SpellEffect(int time, FlatAtribute flatAtribute, int flatNumber,  float modNumber, Modificator modAtribute)
+        public SpellEffect(int time, FlatAtribute flatAtribute, int flatNumber,  float modNumber, Modificator modAtribute, Trigger trigger = Trigger.OnCast)
         {
             Time = time;
             FlatAtributeTarget = flatAtribute;
@@ -68,7 +73,10 @@ namespace Arena
             FlatNumber = flatNumber;
             ModificatorAtribute = modAtribute;
             ModificatorNumber = modNumber;
+            Trigger = trigger;
         }
+
+
 
         public override string ToString()
         {

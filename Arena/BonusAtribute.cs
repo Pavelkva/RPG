@@ -8,10 +8,13 @@ namespace Arena
 {
     public class BonusAtribute
     {
-        public enum Atributes { ArmorBonus, StrengthBonus, AgilityBonus, IntelectBonus, HpBonus, EnergyBonus, DodgeChangeBonus, CriticalChanceBonus}
+        public enum Atributes { ArmorBonus, StrengthBonus, AgilityBonus, IntelectBonus, HpBonus, EnergyBonus, DodgeChangeBonus, CriticalChanceBonus }
         public Atributes Atribute { get; set; }
         public int BonusNumber { get; set; }
         public object Source { get; private set; }
+
+        public Dictionary<Atributes, object> BonusFromItemToFighter {get; set;}
+        
 
         public BonusAtribute(Atributes atribute, int bonusNumber, object source)
         {

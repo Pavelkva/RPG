@@ -12,14 +12,15 @@ namespace Arena
         {
             
 
-            Player player = new Player("Bojovnik1");
-            EnemyNpc enemy = new EnemyNpc("Bojovnik2");
+            Player player = new Player("Bojovnik1", new FighterEffectManager());
+            EnemyNpc enemy = new EnemyNpc("Bojovnik2", new FighterEffectManager());
             FightingPit fightingPit = new FightingPit(player, enemy);
             Inventory inventory = new Inventory();
-            Spell spellSily = new Spell("sila", 10, 2);
-            Spell spellSily2 = new Spell("sila2", 10, 2);
-            spellSily2.AddSpellEffectTarget(SpellEffect.FlatAtribute.hp, -2, 0, 1, SpellEffect.Modificator.intelect);
-            spellSily2.AddSpellEffectTarget(SpellEffect.FlatAtribute.hp, -2, 5, 0.1f, SpellEffect.Modificator.intelect);
+            Spell spellSily = new Spell("Strenght", 10, 2);
+            Spell Ignite = new Spell("Ignite", 10, 2);
+            Ignite.AddSpellEffectTarget(SpellEffect.FlatAtribute.hp, -2, 0, 1, SpellEffect.Modificator.intelect);
+            Ignite.AddSpellEffectTarget(SpellEffect.FlatAtribute.hp, -2, 5, 0.1f, SpellEffect.Modificator.intelect);
+            Ignite.AddSpellEffectCaster(SpellEffect.FlatAtribute.hp, -2, 0, 0, SpellEffect.Modificator.intelect);
             Spell spellSily3 = new Spell("sila3", 10, 2);
 
             spellSily.AddSpellEffectCaster(BonusAtribute.Atributes.StrengthBonus, 5, 5);
@@ -34,7 +35,7 @@ namespace Arena
             inventory[0] = zbran;
             fightingPit.AddItemToPlayerControler(zbran);
 
-            player.SpellBook.Add(spellSily2);
+            player.SpellBook.Add(Ignite);
 
 
             player.OnAttack += ukaz;

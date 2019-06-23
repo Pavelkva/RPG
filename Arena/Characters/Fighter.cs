@@ -179,6 +179,7 @@ namespace Arena
             }
 
         }
+        IFighterEffectManager FighterEffectManager { get; set; }
 
         public event EventHandler<AttackArgs> OnAttack;
         public event EventHandler<SpellCastArgs> OnSpellCast;
@@ -199,7 +200,7 @@ namespace Arena
             public string SpellName { get; set; }
         }
 
-        protected Fighter(string name, int maxHp, int maxEnergy, int strength=10, int agility=10, int intellect=10, int armor=0)
+        protected Fighter(string name, IFighterEffectManager fighterEffectManager, int maxHp, int maxEnergy, int strength=10, int agility=10, int intellect=10, int armor=0)
         {
             spellEffects = new List<SpellEffect>();
             bonusAtributes = new List<BonusAtribute>();
@@ -213,11 +214,13 @@ namespace Arena
             ActualHp = MaxHp;
             ActualEnergy = MaxEnergy;  
             Armor = armor;
+            FighterEffectManager = fighterEffectManager;
         }
 
         protected virtual void Attacked(AttackArgs.HitByAttack attackHit, Fighter target, int damage)
         {
             OnAttack?.Invoke(this, new AttackArgs() { AttackHit = attackHit, Target = target, Attacker = this, Damage = damage });
+            FighterEffectManager.GetDamageFromAttack(this, target);
         }
         protected virtual void Casted(SpellCastArgs.Success success,string spellName)
         {
@@ -225,7 +228,7 @@ namespace Arena
         }
 
         /// <summary>
-        /// Attack can hit miss or critical. If not miss decrease actual hp of target.
+        /// Attack can hit miss or critical. If not miss decrease actual hp of tar#get.
         /// </summary>
         /// <param name="fighter">Target of attack</param>
         public void Attack(Fighter fighter)
@@ -245,7 +248,7 @@ namespace Arena
                     {
                         damageInt = damageInt * 2;
                         fighter.ActualHp -= damageInt; // Crit
-                        Attacked(AttackArgs.HitByAttack.CriticalHit, fighter, damageInt); 
+                        Attacked(AttackArgs.HitByAttack.CriticalHit, fighter, damageInt);
                     }
                     else
                     {
