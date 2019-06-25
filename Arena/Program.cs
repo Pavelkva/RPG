@@ -15,27 +15,33 @@ namespace Arena
             Player player = new Player("Bojovnik1", new FighterEffectManager());
             EnemyNpc enemy = new EnemyNpc("Bojovnik2", new FighterEffectManager());
             FightingPit fightingPit = new FightingPit(player, enemy);
-            Inventory inventory = new Inventory();
-            Spell spellSily = new Spell("Strenght", 10, 2);
-            Spell Ignite = new Spell("Ignite", 10, 2);
-            Ignite.AddSpellEffectTarget(SpellEffect.FlatAtribute.hp, -2, 0, 1, SpellEffect.Modificator.intelect);
-            Ignite.AddSpellEffectTarget(SpellEffect.FlatAtribute.hp, -2, 5, 0.1f, SpellEffect.Modificator.intelect);
-            Ignite.AddSpellEffectCaster(SpellEffect.FlatAtribute.hp, -2, 0, 0, SpellEffect.Modificator.intelect);
-            Spell spellSily3 = new Spell("sila3", 10, 2);
+            
+            Spell ignite = new Spell("ohen", 10, 2);
+            ignite.AddSpellEffectTarget(SpellEffect.FlatAtribute.hp, -2, 0, 1, SpellEffect.Modificator.intelect);
+            ignite.AddSpellEffectTarget(SpellEffect.FlatAtribute.hp, -2, 5, 0.1f, SpellEffect.Modificator.intelect);
+            ignite.AddSpellEffectCaster(SpellEffect.FlatAtribute.hp, -2, 0, 0, SpellEffect.Modificator.intelect);
+            player.SpellBook.Add(ignite);
 
-            spellSily.AddSpellEffectCaster(BonusAtribute.Atributes.StrengthBonus, 5, 5);
-           
+            Spell spellSily = new Spell("sila", 50, 2);
+            spellSily.AddSpellEffectCaster(BonusAtribute.Atributes.StrengthBonus, 5, 5, 0, SpellEffect.Modificator.intelect);
+            player.SpellBook.Add(spellSily);
 
-            Weapon zbran = new Weapon("sekac", Weapon.handle.TwoHand);
-            zbran.AddAtribute(BonusAtribute.Atributes.AgilityBonus, 50);
+            Weapon zbran = new Weapon("obourucak", Weapon.handle.TwoHand);
             zbran.AddAtribute(BonusAtribute.Atributes.StrengthBonus, 10);
-            zbran.MaxDamage = 2;
-            zbran.MinDamage = 1;
+            zbran.MaxDamage = 10;
+            zbran.MinDamage = 5;
+            player.AddToInventory(zbran);
 
-            inventory[0] = zbran;
-            fightingPit.AddItemToPlayerControler(zbran);
+            Weapon zbran2 = new Weapon("dyka", Weapon.handle.OneHand);
+            zbran2.MaxDamage = 4;
+            zbran2.MinDamage = 1;
+            player.AddToInventory(zbran2);
 
-            player.SpellBook.Add(Ignite);
+            Equipment stit = new Equipment("stit", Equipment.Parts.OffHand);
+            stit.AddAtribute(BonusAtribute.Atributes.ArmorBonus, 50);
+            player.AddToInventory(stit);
+
+
 
 
             player.OnAttack += ukaz;

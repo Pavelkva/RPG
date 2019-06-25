@@ -42,15 +42,5 @@ namespace Arena
             enemyNpc.PlayTurn(player);
             TurnNumber += 1;
         }
-
-        public void AddItemToPlayerControler( Equipment equipment)
-        {
-            playerController.AddItem(equipment);
-        }
-
-        public void AddSpellToPlayerControler(Spell spell)
-        {
-            playerController.AddSpell(spell);
-        }
     }
 }

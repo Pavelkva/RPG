@@ -35,8 +35,11 @@ namespace Arena
             intelect
         }
         public Modificator ModificatorAtribute { get; private set; }
-        public enum Trigger { OnCast, OnAttack, TurnStart, TurnEnd }
+        public enum Trigger { OnCast, OnAttack, TurnStart, TurnEnd, OnCriticalHit, OnHit, OnMiss, DamageReceived, CriticalHitReceived, HitReceived, MissReceived, SpellEffectReceived, SpellDamageReceived }
         public Trigger SpellTrigger {get; private set;}
+        public enum SpecialEffect { Stun, Silence }
+        public SpecialEffect SpellSpecialEffect { get; private set;}
+        public SpellEffect CausedSpellEffect { get; private set; }
         public float ModificatorNumber { get; private set; }
         public int? FlatNumber { get; private set; }
         public int FinalNumber { get; set; } = 0;
@@ -48,13 +51,13 @@ namespace Arena
         /// </summary>
         /// <param name="time">Number of rounds when effect is active. -1 for permanent</param>
         /// <param name="bonusAtribute">Atribute to edit</param>
-        public SpellEffect (int time, BonusAtribute bonusAtribute, Modificator modAtribute, Trigger spellTrigger = Trigger.OnCast)
+        public SpellEffect (int time, BonusAtribute bonusAtribute,float modNumber, Modificator modAtribute)
         {
             Time = time;
             BonusAtribute = bonusAtribute;
             RemainingTime = time;
             ModificatorAtribute = modAtribute;
-            SpellTrigger = spellTrigger;
+            ModificatorNumber = modNumber;
         }
 
         /// <summary>
@@ -73,7 +76,32 @@ namespace Arena
             FlatNumber = flatNumber;
             ModificatorAtribute = modAtribute;
             ModificatorNumber = modNumber;
-            Trigger = trigger;
+            SpellTrigger = trigger;
+        }
+
+        /// <summary>
+        /// Special effect.
+        /// </summary>
+        /// <param name="time">Number of rounds when effect is active</param>
+        /// <param name="specialEffect">Type of special effect</param>
+        /// <param name="trigger">When active</param>
+        public SpellEffect(int time, SpecialEffect specialEffect)
+        {
+            Time = time;
+            SpellSpecialEffect = specialEffect;
+        }
+
+        /// <summary>
+        /// Raise another spell effect.
+        /// </summary>
+        /// <param name="time"></param>
+        /// <param name="spellEffect"></param>
+        /// <param name="trigger"></param>
+        public SpellEffect(int time, SpellEffect spellEffect, Trigger trigger)
+        {
+            Time = time;
+            CausedSpellEffect = spellEffect;
+            SpellTrigger = trigger;
         }
 
 

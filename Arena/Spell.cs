@@ -81,9 +81,9 @@ namespace Arena
         /// <param name="atribute">Target atribute</param>
         /// <param name="count">How much to change atribute</param>
         /// <param name="time">How long the change is active</param>
-        public void AddSpellEffectCaster (BonusAtribute.Atributes atribute, int count, int time)
+        public void AddSpellEffectCaster (BonusAtribute.Atributes atribute, int count, int time, float modificatorNumber, SpellEffect.Modificator modifcatorType)
         {
-            SpellEffectsForCaster.Add(new SpellEffect(time, new BonusAtribute(atribute, count, this)));
+            SpellEffectsForCaster.Add(new SpellEffect(time, new BonusAtribute(atribute, count, this), modificatorNumber, modifcatorType));
         }
 
         /// <summary>
@@ -105,9 +105,9 @@ namespace Arena
         /// <param name="atribute">Target atribute</param>
         /// <param name="count">How much to change atribute</param>
         /// <param name="time">How long the change is active</param>
-        public void AddSpellEffectTarget(BonusAtribute.Atributes atribute, int count, int time)
+        public void AddSpellEffectTarget(BonusAtribute.Atributes atribute, int count, int time, int modificatorNumber, SpellEffect.Modificator modificatorType)
         {
-            SpellEffectsForTarget.Add(new SpellEffect(time, new BonusAtribute(atribute, count, this)));
+            SpellEffectsForTarget.Add(new SpellEffect(time, new BonusAtribute(atribute, count, this), modificatorNumber, modificatorType));
         }
 
         /// <summary>

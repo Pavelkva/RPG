@@ -188,9 +188,9 @@ namespace Arena
         {
             public enum HitByAttack { Hit, CriticalHit, Miss }
             public HitByAttack AttackHit  { get; set; }
-            public int Damage { get; set; }
             public Fighter Target { get; set; }
             public Fighter Attacker { get; set; }
+            public int Damage { get; set; }
         }
 
         public class SpellCastArgs : EventArgs
@@ -219,8 +219,9 @@ namespace Arena
 
         protected virtual void Attacked(AttackArgs.HitByAttack attackHit, Fighter target, int damage)
         {
-            OnAttack?.Invoke(this, new AttackArgs() { AttackHit = attackHit, Target = target, Attacker = this, Damage = damage });
-            FighterEffectManager.GetDamageFromAttack(this, target);
+            AttackArgs attackArgs = new AttackArgs() { AttackHit = attackHit, Target = target, Attacker = this, Damage = damage };
+            OnAttack?.Invoke(this, attackArgs);
+            FighterEffectManager.GetDamageFromAttack(attackArgs);
         }
         protected virtual void Casted(SpellCastArgs.Success success,string spellName)
         {
@@ -246,13 +247,11 @@ namespace Arena
                     hit = random.Next(1, 100);
                     if (hit <= CriticalHitChance) // Check if crit
                     {
-                        damageInt = damageInt * 2;
-                        fighter.ActualHp -= damageInt; // Crit
+                        damage = damage * 2;
                         Attacked(AttackArgs.HitByAttack.CriticalHit, fighter, damageInt);
                     }
                     else
                     {
-                        fighter.ActualHp -= damageInt; // normal hit
                         Attacked(AttackArgs.HitByAttack.Hit, fighter, damageInt);
                     }
                 }
